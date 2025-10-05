@@ -241,55 +241,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* Certifications & Education Section */}
-      <section className="section bg-slate-900/50">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-white">Certifications & Education</h2>
-            <div className="mx-auto w-40 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Education Cards */}
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">Master of Computer Science</div>
-              <div className="text-cyan-300 text-sm mb-2">Stanford University</div>
-              <div className="text-slate-400 text-sm">2014 - 2016</div>
-            </div>
-
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">AWS Certified Solutions Architect</div>
-              <div className="text-cyan-300 text-sm mb-2">Amazon Web Services</div>
-              <div className="text-slate-400 text-sm">2019</div>
-            </div>
-
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">TensorFlow Developer Certificate</div>
-              <div className="text-cyan-300 text-sm mb-2">Google</div>
-              <div className="text-slate-400 text-sm">2020</div>
-            </div>
-
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">Full-Stack Web Development</div>
-              <div className="text-cyan-300 text-sm mb-2">freeCodeCamp</div>
-              <div className="text-slate-400 text-sm">2018</div>
-            </div>
-
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">Bachelor of Science in Computer Engineering</div>
-              <div className="text-cyan-300 text-sm mb-2">MIT</div>
-              <div className="text-slate-400 text-sm">2010 - 2014</div>
-            </div>
-
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <div className="text-cyan-400 font-bold text-lg mb-2">Data Science Professional</div>
-              <div className="text-cyan-300 text-sm mb-2">IBM</div>
-              <div className="text-slate-400 text-sm">2019</div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
