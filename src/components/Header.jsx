@@ -24,12 +24,12 @@ const Header = () => {
             <Link to="/about" className={`nav-link ${isActive("/about") ? "active" : ""}`}>
               About
             </Link>
-            <Link to="/projects" className={`nav-link ${isActive("/projects") ? "active" : ""}`}>
+            {/* <Link to="/projects" className={`nav-link ${isActive("/projects") ? "active" : ""}`}>
               Projects
             </Link>
             <Link to="/contact" className={`nav-link ${isActive("/contact") ? "active" : ""}`}>
               Contact
-            </Link>
+            </Link> */}
           </nav>
 
           {/* Mobile Menu Button */}
