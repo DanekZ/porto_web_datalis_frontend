@@ -27,9 +27,9 @@ const Header = () => {
             <Link to="/projects" className={`nav-link ${isActive("/projects") ? "active" : ""}`}>
               Projects
             </Link>
-            {/* <Link to="/contact" className={`nav-link ${isActive("/contact") ? "active" : ""}`}>
+            <Link to="/contact" className={`nav-link ${isActive("/contact") ? "active" : ""}`}>
               Contact
-            </Link> */}
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -53,9 +53,9 @@ const Header = () => {
               <Link to="/projects" className={`nav-link ${isActive("/projects") ? "active" : ""}`} onClick={() => setIsMenuOpen(false)}>
                 Projects
               </Link>
-              {/* <Link to="/contact" className={`nav-link ${isActive("/contact") ? "active" : ""}`} onClick={() => setIsMenuOpen(false)}>
+              <Link to="/contact" className={`nav-link ${isActive("/contact") ? "active" : ""}`} onClick={() => setIsMenuOpen(false)}>
                 Contact
-              </Link> */}
+              </Link>
             </div>
           </div>
         )}
