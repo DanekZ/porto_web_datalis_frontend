@@ -18,8 +18,8 @@ function Home() {
       },
       {
         threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: '0px 0px -50px 0px' // Trigger slightly before the element comes into view
-      }
+        rootMargin: "0px 0px -50px 0px", // Trigger slightly before the element comes into view
+      },
     );
 
     const currentElement = expertiseRef.current;
@@ -36,12 +36,12 @@ function Home() {
 
   return (
     <>
-      <div className="pt-16 min-h-screen">
+      <div className="min-h-screen pt-16">
         {/* Hero Section */}
         <GridBackground>
           <section className="flex justify-center items-center h-[90vh] px-4 sm:px-6 lg:px-8">
             <div className="container flex flex-col-reverse justify-between items-center md:flex-row min-h-[50vh] gap-8 md:gap-12">
-              <div className="flex-1 mx-auto max-w-2xl text-wrap">
+              <div className="flex-1 max-w-2xl mx-auto text-wrap">
                 {/* Step 1: Greeting */}
                 <p className="mb-2 text-sm font-semibold sm:text-base lg:text-lg text-gradient text-start">
                   <TypeAnimation sequence={["Hello, My name is"]} speed={50} repeat={0} cursor={false} />
@@ -54,7 +54,7 @@ function Home() {
 
                 {/* Step 3: Profession with delay */}
                 <h2 className="mb-4 text-lg font-semibold text-gray-300 sm:text-xl md:text-2xl lg:text-3xl text-start">
-                  <TypeAnimation sequence={[2500, "Web Developer", 2500, "Data Scientist"]} speed={50} repeat={Infinity} />
+                  <TypeAnimation sequence={[2500, "Web Developer", 2500, "Data Analyst"]} speed={50} repeat={Infinity} />
                 </h2>
 
                 <p className="text-sm leading-relaxed text-gray-400 sm:text-base lg:text-lg text-start">
@@ -66,20 +66,20 @@ function Home() {
                   />
                 </p>
               </div>
-              <div className="flex flex-1 justify-center items-center">
-                <img src={MyFoto} alt="My Foto" className="object-cover w-48 h-48 rounded-lg border-4 border-gray-500 shadow-lg sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72" />
+              <div className="flex items-center justify-center flex-1">
+                <img src={MyFoto} alt="My Foto" className="object-cover w-48 h-48 border-4 border-gray-500 rounded-lg shadow-lg sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72" />
               </div>
             </div>
           </section>
         </GridBackground>
 
         {/* My Expertise */}
-        <section ref={expertiseRef} className="flex justify-center items-center min-h-screen section">
+        <section ref={expertiseRef} className="flex items-center justify-center min-h-screen section">
           <div className="container">
             <div className="text-center">
               <div className={`mb-8 transition-all duration-1000 ${isExpertiseVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
                 <h2 className="mb-4 text-4xl font-bold text-white">My Expertise</h2>
-                <div className="mx-auto w-40 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                <div className="w-40 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
               </div>
               <div className={`grid grid-cols-1 gap-8 mx-auto max-w-6xl md:grid-cols-2 transition-all duration-1000 delay-300 ${isExpertiseVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
                 {/* Web Development Column */}
@@ -89,7 +89,7 @@ function Home() {
                   }`}
                 >
                   <div className="flex items-center mb-6">
-                    <div className="flex justify-center items-center mr-3 w-8 h-8 bg-blue-500 rounded-lg">
+                    <div className="flex items-center justify-center w-8 h-8 mr-3 bg-blue-500 rounded-lg">
                       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path
                           fillRule="evenodd"
@@ -136,7 +136,7 @@ function Home() {
                   }`}
                 >
                   <div className="flex items-center mb-6">
-                    <div className="flex justify-center items-center mr-3 w-8 h-8 bg-purple-500 rounded-lg">
+                    <div className="flex items-center justify-center w-8 h-8 mr-3 bg-purple-500 rounded-lg">
                       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                       </svg>
