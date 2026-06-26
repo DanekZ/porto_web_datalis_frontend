@@ -6,6 +6,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./components/common/ScrollToTop";
+import Achievements from './pages/Achievements';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/achievements" element={<Achievements />} />
         </Routes>
       </Layout>
     </Router>

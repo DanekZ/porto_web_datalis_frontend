@@ -29,3 +29,9 @@ export const getSkills = () => apiFetch("/skills");
 // ── Experiences ───────────────────────────────────────────────────────────────
 
 export const getExperiences = () => apiFetch("/experiences");
+
+// Educations
+export const getEducations = () => apiFetch('/educations');
+
+// Achievements
+export const getAchievements = () => apiFetch('/achievements');
