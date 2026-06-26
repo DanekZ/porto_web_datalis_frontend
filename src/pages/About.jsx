@@ -63,7 +63,7 @@ const About = () => {
               </div>
 
               <div className="text-center lg:text-left">
-                <h3 className="mb-2 text-2xl font-bold text-cyan-400">Full-Stack Developer & Data Scientist</h3>
+                <h3 className="mb-2 text-2xl font-bold text-cyan-400">Full-Stack Developer & Data Analytics</h3>
                 <p className="mb-6 leading-relaxed text-slate-300">
                   I'm <span className="font-extrabold">Zidane Abbas Mallaniung</span>, a graduate of <span className="font-extrabold">Diploma in Informatics Engineering</span> with a strong interest in{" "}
                   <span className="font-extrabold">web development</span> and <span className="font-extrabold">data management</span>. Since college, I've been actively involved in developing various web-based projects, including a Point of
@@ -81,7 +81,7 @@ const About = () => {
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-cyan-400/30" />
 
               {expLoading ? (
-                <Loading />
+                <Loading  className="md:grid-cols-1 lg:grid-cols-1"/>
               ) : expError ? (
                 <ErrorState message={expError} onRetry={refetchExp} />
               ) : (

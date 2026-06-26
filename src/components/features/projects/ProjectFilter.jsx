@@ -12,7 +12,7 @@ export default function ProjectFilter({ activeFilter, onFilterChange, projectCou
     },
     {
       id: "data",
-      label: "Data Science",
+      label: "Data Analysis",
       count: projectCounts.data,
     },
   ];

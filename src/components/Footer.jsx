@@ -1,11 +1,31 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const [localTime, setLocalTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const time = new Date().toLocaleTimeString('id-ID', {
+        timeZone: 'Asia/Makassar',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      });
+      setLocalTime(time);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const socialLinks = [
-    { name: "GitHub", url: "https://github.com/DanekZ", icon: "github" },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/zidane-abbas-m-413536258/", icon: "linkedin" },
-    { name: "TikTok", url: "https://www.tiktok.com/@mb3rr", icon: "tiktok" },
-    { name: "Instagram", url: "https://www.instagram.com/dane_zdn/", icon: "instagram" },
+    { name: "GitHub",    url: "https://github.com/DanekZ",                              icon: "github" },
+    { name: "LinkedIn",  url: "https://www.linkedin.com/in/zidane-abbas-m-413536258/", icon: "linkedin" },
+    { name: "TikTok",   url: "https://www.tiktok.com/@mb3rr",                          icon: "tiktok" },
+    { name: "Instagram", url: "https://www.instagram.com/dane_zdn/",                   icon: "instagram" },
   ];
 
   const getSocialIcon = (iconType) => {
@@ -39,32 +59,128 @@ function Footer() {
     }
   };
 
+  const navLinks = [
+    { path: '/',             label: 'Home' },
+    { path: '/about',        label: 'About' },
+    { path: '/projects',     label: 'Projects' },
+    { path: '/achievements', label: 'Achievements' },
+    { path: '/contact',      label: 'Contact' },
+  ];
   return (
-    <footer className="py-7 border-t bg-slate-900 border-slate-700">
-      <div className="container py-8">
-        <div className="flex flex-col justify-between items-center space-y-4 md:flex-row md:space-y-0">
-          {/* Copyright */}
-          <div className="text-sm text-slate-400">© {currentYear} Zidane Abbas Mallaniung.</div>
+    <footer className="border-t border-[#2d2d2d] bg-[#171717]">
+      <div className="container max-w-6xl mx-auto px-6" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
 
-          {/* Social Links */}
-          <div className="flex space-x-6">
+        {/* Top */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-8">
+
+
+          {/* Brand */}
+          <div>
+            <Link 
+              to="/" 
+              className="text-white font-bold text-xl tracking-tight"
+            >
+              Zidane<span className="text-blue-400">.</span>
+            </Link>
+
+            <p className="mt-3 text-sm text-[#737373] leading-relaxed max-w-sm">
+              Web Developer & Data Analyst based in Balikpapan, East Kalimantan.
+            </p>
+          </div>
+
+
+          {/* Navigation */}
+          <div>
+            <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-widest">
+              Navigation
+            </h4>
+
+            <div className="flex flex-col gap-2">
+              {navLinks.map(({ path, label }) => (
+                <Link
+                  key={path}
+                  to={path}
+                  className="text-sm text-[#737373] hover:text-white transition-colors"
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+
+          {/* Local Time */}
+          <div>
+            <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-widest">
+              Local Time
+            </h4>
+
+            <p className="text-sm text-[#737373]">
+              Balikpapan, Indonesia (WITA)
+            </p>
+
+            <p className="mt-1 text-2xl font-mono font-bold text-white">
+              {localTime}
+            </p>
+          </div>
+
+        </div>
+
+
+        {/* Bottom */}
+        <div className="
+          border-t border-[#2d2d2d]
+          pt-5
+          flex
+          flex-col
+          md:flex-row
+          justify-between
+          items-center
+          gap-4
+        ">
+
+
+          <div className="flex items-center gap-3 text-sm text-[#525252]">
+            <span>
+              © {currentYear} Zidane Abbas Mallaniung.
+            </span>
+
+            <span className="hidden md:inline">
+              •
+            </span>
+
+            <span>
+              Web Developer & Data Analyst
+            </span>
+          </div>
+
+
+          {/* Social */}
+          <div className="flex gap-4">
+
             {socialLinks.map((link) => (
-              <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 transform text-slate-400 hover:text-white hover:scale-110" aria-label={link.name} title={link.name}>
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  text-[#525252]
+                  hover:text-white
+                  transition
+                  duration-200
+                  hover:scale-110
+                "
+              >
                 {getSocialIcon(link.icon)}
               </a>
             ))}
+
           </div>
+
+
         </div>
 
-        {/* Additional Info */}
-        <div className="pt-6 mt-6 border-t border-slate-700">
-          <div className="flex flex-col justify-between items-center space-y-2 md:flex-row md:space-y-0">
-            <div className="flex items-center space-x-4 text-sm text-slate-500">
-              <span>Web Developer & Data Analyst</span>
-              <span className="hidden md:inline">•</span>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   );
