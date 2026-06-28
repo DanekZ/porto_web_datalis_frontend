@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
-  const [localTime, setLocalTime] = useState('');
+  const [localTime, setLocalTime] = useState("");
 
   useEffect(() => {
     const updateTime = () => {
-      const time = new Date().toLocaleTimeString('id-ID', {
-        timeZone: 'Asia/Makassar',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
+      const time = new Date().toLocaleTimeString("id-ID", {
+        timeZone: "Asia/Makassar",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
         hour12: false,
       });
       setLocalTime(time);
@@ -22,10 +22,10 @@ function Footer() {
   }, []);
 
   const socialLinks = [
-    { name: "GitHub",    url: "https://github.com/DanekZ",                              icon: "github" },
-    { name: "LinkedIn",  url: "https://www.linkedin.com/in/zidane-abbas-m-413536258/", icon: "linkedin" },
-    { name: "TikTok",   url: "https://www.tiktok.com/@mb3rr",                          icon: "tiktok" },
-    { name: "Instagram", url: "https://www.instagram.com/dane_zdn/",                   icon: "instagram" },
+    { name: "GitHub", url: "https://github.com/DanekZ", icon: "github" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/zidane-abbas-m-413536258/", icon: "linkedin" },
+    { name: "TikTok", url: "https://www.tiktok.com/@mb3rr", icon: "tiktok" },
+    { name: "Instagram", url: "https://www.instagram.com/dane_zdn/", icon: "instagram" },
   ];
 
   const getSocialIcon = (iconType) => {
@@ -60,75 +60,52 @@ function Footer() {
   };
 
   const navLinks = [
-    { path: '/',             label: 'Home' },
-    { path: '/about',        label: 'About' },
-    { path: '/projects',     label: 'Projects' },
-    { path: '/achievements', label: 'Achievements' },
-    { path: '/contact',      label: 'Contact' },
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/projects", label: "Projects" },
+    { path: "/achievements", label: "Achievements" },
+    { path: "/contact", label: "Contact" },
   ];
   return (
     <footer className="border-t border-[#2d2d2d] bg-[#171717]">
-      <div className="container max-w-6xl mx-auto px-6" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
-
+      <div className="container max-w-6xl px-6 mx-auto" style={{ paddingTop: "3rem", paddingBottom: "3rem" }}>
         {/* Top */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-8">
-
-
+        <div className="grid grid-cols-1 gap-10 mb-8 md:grid-cols-3">
           {/* Brand */}
           <div>
-            <Link 
-              to="/" 
-              className="text-white font-bold text-xl tracking-tight"
-            >
+            <Link to="/" className="text-xl font-bold tracking-tight text-white">
               Zidane<span className="text-blue-400">.</span>
             </Link>
 
-            <p className="mt-3 text-sm text-[#737373] leading-relaxed max-w-sm">
-              Web Developer & Data Analyst based in Balikpapan, East Kalimantan.
-            </p>
+            <p className="mt-3 text-sm text-[#737373] leading-relaxed max-w-sm">Web Developer & Data Analytics based in Bontang, East Kalimantan.</p>
           </div>
-
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-widest">
-              Navigation
-            </h4>
+            <h4 className="mb-3 text-sm font-semibold tracking-widest text-white uppercase">Navigation</h4>
 
             <div className="flex flex-col gap-2">
               {navLinks.map(({ path, label }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  className="text-sm text-[#737373] hover:text-white transition-colors"
-                >
+                <Link key={path} to={path} className="text-sm text-[#737373] hover:text-white transition-colors">
                   {label}
                 </Link>
               ))}
             </div>
           </div>
 
-
           {/* Local Time */}
           <div>
-            <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-widest">
-              Local Time
-            </h4>
+            <h4 className="mb-3 text-sm font-semibold tracking-widest text-white uppercase">Local Time</h4>
 
-            <p className="text-sm text-[#737373]">
-              Balikpapan, Indonesia (WITA)
-            </p>
+            <p className="text-sm text-[#737373]">Bontang, Indonesia (WITA)</p>
 
-            <p className="mt-1 text-2xl font-mono font-bold text-white">
-              {localTime}
-            </p>
+            <p className="mt-1 font-mono text-2xl font-bold text-white">{localTime}</p>
           </div>
-
         </div>
 
-
         {/* Bottom */}
-        <div className="
+        <div
+          className="
           border-t border-[#2d2d2d]
           pt-5
           flex
@@ -137,27 +114,18 @@ function Footer() {
           justify-between
           items-center
           gap-4
-        ">
-
-
+        "
+        >
           <div className="flex items-center gap-3 text-sm text-[#525252]">
-            <span>
-              © {currentYear} Zidane Abbas Mallaniung.
-            </span>
+            <span>© {currentYear} Zidane Abbas Mallaniung.</span>
 
-            <span className="hidden md:inline">
-              •
-            </span>
+            <span className="hidden md:inline">•</span>
 
-            <span>
-              Web Developer & Data Analyst
-            </span>
+            <span>Web Developer & Data Analyst</span>
           </div>
-
 
           {/* Social */}
           <div className="flex gap-4">
-
             {socialLinks.map((link) => (
               <a
                 key={link.name}
@@ -175,12 +143,8 @@ function Footer() {
                 {getSocialIcon(link.icon)}
               </a>
             ))}
-
           </div>
-
-
         </div>
-
       </div>
     </footer>
   );
