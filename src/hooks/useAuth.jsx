@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
+const BASE_URL = import.meta.env.VITE_API_URL+"/api" || "http://localhost:8000/api";
 
 const AuthContext = createContext(null);
 
@@ -9,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      fetch("http://localhost:8000/api/me", {
+      fetch(`${BASE_URL}/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((r) => (r.ok ? r.json() : Promise.reject()))
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await fetch("http://localhost:8000/api/login", {
+    const res = await fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await fetch("http://localhost:8000/api/logout", {
+    await fetch(`${BASE_URL}/logout`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });
