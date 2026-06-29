@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const BASE_URL = import.meta.env.VITE_API_URL+"/api" || "http://localhost:8000/api";
 
 const getToken = () => localStorage.getItem("admin_token");
 
@@ -7,6 +7,7 @@ const authFetch = async (endpoint, options = {}) => {
     ...options,
     headers: {
       "Content-Type": "application/json",
+        Accept: "application/json",    
       Authorization: `Bearer ${getToken()}`,
       ...options.headers,
     },
@@ -20,12 +21,16 @@ const authFetch = async (endpoint, options = {}) => {
 
 // ── Upload ────────────────────────────────────────────────────────────────────
 export const adminUploadImage = async (file) => {
+ const token = getToken();
+  console.log("TOKEN saat upload:", token); // 
+
   const formData = new FormData();
   formData.append("image", file);
 
   const res = await fetch(`${BASE_URL}/upload`, {
     method: "POST",
     headers: {
+        Accept: "application/json",    
       Authorization: `Bearer ${getToken()}`,
       // JANGAN set Content-Type — biarkan browser set boundary otomatis
     },
