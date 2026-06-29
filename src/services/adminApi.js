@@ -22,7 +22,6 @@ const authFetch = async (endpoint, options = {}) => {
 // ── Upload ────────────────────────────────────────────────────────────────────
 export const adminUploadImage = async (file) => {
  const token = getToken();
-  console.log("TOKEN saat upload:", token); // 
 
   const formData = new FormData();
   formData.append("image", file);
@@ -31,7 +30,7 @@ export const adminUploadImage = async (file) => {
     method: "POST",
     headers: {
         Accept: "application/json",    
-      Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getToken()}`,
       // JANGAN set Content-Type — biarkan browser set boundary otomatis
     },
     body: formData,

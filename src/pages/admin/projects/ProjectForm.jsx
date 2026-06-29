@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft, Plus, X, Upload, Image } from "lucide-react";
 import { adminGetProject, adminCreateProject, adminUpdateProject, adminUploadImage, adminDeleteImage } from "../../../services/adminApi";
 
+
 const initialForm = {
   title: "",
   description: "",
@@ -80,7 +81,7 @@ const ProjectForm = () => {
       const res = await adminUploadImage(file);
       setForm((prev) => ({
         ...prev,
-        thumbnail: `http://localhost:8000${res.url}`,
+        thumbnail: `${import.meta.env.VITE_API_URL.replace('/api', '')}${res.url}`,
         thumbnail_path: res.path,
       }));
     } catch (err) {
@@ -111,7 +112,7 @@ const ProjectForm = () => {
       const results = await Promise.all(toUpload.map((f) => adminUploadImage(f)));
       setForm((prev) => ({
         ...prev,
-        images: [...prev.images, ...results.map((r) => `http://localhost:8000${r.url}`)],
+        images: [...prev.images, ...results.map((r) => `${import.meta.env.VITE_API_URL.replace('/api', '')}${r.url}`)],
         image_paths: [...prev.image_paths, ...results.map((r) => r.path)],
       }));
     } catch (err) {
