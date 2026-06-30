@@ -47,7 +47,7 @@ const AchievementCard = ({ achievement, onClick }) => {
       <div className="relative h-44 bg-[#0d0d0d] overflow-hidden flex items-center justify-center">
         {image ? (
           <img src={image} alt={title}
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 p-3" />
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="w-16 h-16 rounded-2xl bg-[#262626] border border-[#333] flex items-center justify-center">
             <Icon size={32} className={meta.color} />
@@ -284,11 +284,11 @@ const Achievements = () => {
   ];
 
   return (
-    <div className="pt-20 min-h-screen">
+    <div className="min-h-screen">
       <section ref={sectionRef} className="section">
         <div className="container">
 
-          <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`mb-6 text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 className="section-title">Achievements</h2>
             <div className="section-divider" />
             <p className="text-[#737373] max-w-xl mx-auto text-sm">

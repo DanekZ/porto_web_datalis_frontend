@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { useApi } from "../hooks/useApi";
 import { getProjects } from "../services/api";
 import ProjectFilter from "../components/features/projects/ProjectFilter.jsx";
@@ -7,6 +7,9 @@ import ErrorState from "../components/common/ErrorState.jsx";
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [isVisible, setIsVisible] = useState(false);
+
+  const sectionRef = useRef(null);
 
   const { data, isLoading, error, refetch } = useApi(() => getProjects(), []);
 
@@ -26,13 +29,36 @@ const Projects = () => {
     return projects.filter((p) => p.category === activeFilter);
   }, [projects, activeFilter]);
 
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (sectionRef.current) {
+      obs.observe(sectionRef.current);
+    }
+
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className="pt-16 min-h-screen">
+    <div className="min-h-screen">
 
       {/* Header */}
-      <section className="section pb-0">
+      <section className="pt-20 pb-12">
         <div className="container">
-          <div className="text-center">
+          <div
+              className={`text-center transition-all duration-700 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
             <h2 className="section-title">Projects</h2>
             <div className="section-divider" />
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[#737373]">
@@ -43,7 +69,7 @@ const Projects = () => {
       </section>
 
       {/* Projects */}
-      <section className="section pt-10">
+      <section ref={sectionRef}>
         <div className="container">
           <div className="flex flex-col">
             <ProjectFilter
@@ -55,7 +81,18 @@ const Projects = () => {
             {error ? (
               <ErrorState message={error} onRetry={refetch} />
             ) : (
-              <ProjectGrid projects={filteredProjects} isLoading={isLoading} />
+              <div
+              className={`transition-all duration-700 delay-200 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
+              <ProjectGrid 
+                projects={filteredProjects} 
+                isLoading={isLoading}
+              />
+            </div>
             )}
           </div>
         </div>

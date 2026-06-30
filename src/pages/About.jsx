@@ -357,8 +357,13 @@ const services = [
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const About = () => {
+  const [isAboutVisible, setAboutVisible] = useState(false);
+  const [isEducationVisible, setEducationVisible] = useState(false);
   const [isServicesVisible, setServicesVisible] = useState(false);
   const [isSkillsVisible, setSkillsVisible] = useState(false);
+
+  const aboutRef = useRef(null);
+  const educationRef = useRef(null);
   const servicesRef = useRef(null);
   const skillsRef = useRef(null);
 
@@ -379,31 +384,45 @@ const About = () => {
         ([entry]) => {
           if (entry.isIntersecting) setter(true);
         },
-        { threshold: 0.05 },
+        { threshold: 0.05 }
       );
 
+    const obsAbout = makeObs(setAboutVisible);
+    const obsEducation = makeObs(setEducationVisible);
     const obsServices = makeObs(setServicesVisible);
     const obsSkills = makeObs(setSkillsVisible);
 
+    if (aboutRef.current) obsAbout.observe(aboutRef.current);
+    if (educationRef.current) obsEducation.observe(educationRef.current);
     if (servicesRef.current) obsServices.observe(servicesRef.current);
     if (skillsRef.current) obsSkills.observe(skillsRef.current);
 
     return () => {
+      obsAbout.disconnect();
+      obsEducation.disconnect();
       obsServices.disconnect();
       obsSkills.disconnect();
     };
   }, []);
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen ">
       {/* ── About Me & Timeline ──────────────────────────────────────────── */}
-      <section className="section">
+      <section ref={aboutRef} className="section">
         <div className="container">
-          <div className="mb-12 text-center">
+          <div className={`mb-12 text-center transition-all duration-700 ${
+               isAboutVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+            }`}>
             <h2 className="section-title">About Me</h2>
             <div className="section-divider" />
           </div>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+             <div className={`grid grid-cols-1 gap-12 lg:grid-cols-2 transition-all duration-700 delay-200 ${
+              isAboutVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+            }`}>
             {/* Profile */}
             <div className="flex flex-col items-center lg:items-start">
               <div className="mb-8 w-32 h-32 rounded-xl border border-[#2d2d2d] overflow-hidden">
@@ -443,9 +462,13 @@ const About = () => {
       </section>
 
       {/* ── Education ────────────────────────────────────────────────────── */}
-      <section className="section border-t border-[#2d2d2d]">
+      <section ref={educationRef} className="section border-t border-[#2d2d2d]">
         <div className="container">
-          <div className="mb-12 text-center">
+            <div className={`mb-12 text-center transition-all duration-700 ${
+              isEducationVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+            }`}>
             <h2 className="section-title">Education</h2>
             <div className="section-divider" />
           </div>
@@ -454,7 +477,11 @@ const About = () => {
           ) : eduError ? (
             <ErrorState message={eduError} onRetry={refetchEdu} />
           ) : (
-            <div className="grid max-w-4xl grid-cols-1 gap-4 mx-auto md:grid-cols-2">
+            <div className={`grid max-w-4xl grid-cols-1 gap-4 mx-auto md:grid-cols-2 transition-all duration-700 delay-200 ${
+                isEducationVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+              }`}>
               {educations.map((edu) => (
                 <EducationCard key={edu.id} {...edu} />
               ))}

@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Mail, MapPin, Clock, Github, Linkedin, Instagram } from "lucide-react";
 import { getSettings } from "../services/api";
 import { useApi } from "../hooks/useApi";
 
 const Contact = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const sectionRef = useRef(null);
+
   const { data: settingsData, isLoading: settingsLoading, error: settingsError } = useApi(getSettings);
 
   const [formData, setFormData] = useState({
@@ -14,6 +18,23 @@ const Contact = () => {
   });
 
   const [localTime, setLocalTime] = useState("");
+
+  useEffect(() => {
+  const obs = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+      }
+    },
+    { threshold: 0.05 }
+  );
+
+  if (sectionRef.current) {
+    obs.observe(sectionRef.current);
+  }
+
+  return () => obs.disconnect();
+}, []);
 
   useEffect(() => {
     const update = () => {
@@ -94,11 +115,17 @@ ${message}`,
   const inputClass = "w-full px-4 py-3 bg-[#1a1a1a] border border-[#2d2d2d] rounded-lg text-white placeholder-[#525252] text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300";
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       {/* Header */}
-      <section className="pb-0 section">
+      <section className="pt-20 pb-12">
         <div className="container">
-          <div className="text-center">
+          <div
+              className={`text-center transition-all duration-700 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
             <h1 className="section-title">Get In Touch</h1>
 
             <div className="section-divider" />
@@ -109,9 +136,15 @@ ${message}`,
       </section>
 
       {/* Main */}
-      <section className="pt-10 section">
-        <div className="container">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
+      <section ref={sectionRef}>
+        <div className="container" style={{ marginBottom: "30px"  }}>
+          <div
+              className={`grid grid-cols-1 gap-8 lg:grid-cols-5 transition-all duration-700 delay-200 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
             {/* Form */}
             <div className="lg:col-span-3 bg-[#1a1a1a] border border-[#2d2d2d] rounded-2xl p-8">
               <h2 className="mb-6 text-lg font-bold text-white">Send a Message</h2>
