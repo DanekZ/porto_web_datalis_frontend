@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import ImageWithSkeleton from '../../common/ImageWithSkeleton.jsx';
 
 const ProjectCard = ({ project }) => {
   const thumbnail = project.thumbnail ?? project.image;
@@ -10,31 +11,29 @@ const ProjectCard = ({ project }) => {
   return (
     <div className="group flex flex-col h-full bg-[#1a1a1a] border border-[#2d2d2d] rounded-2xl overflow-hidden hover:border-[#404040] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30">
 
-      {/* Thumbnail */}
-      <div className="relative overflow-hidden h-48">
-        <img
-          src={thumbnail}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-40" />
+    {/* Thumbnail */}
+    <div className="relative h-48">
+      <ImageWithSkeleton
+        src={thumbnail}
+        alt={project.title}
+        containerClassName="w-full h-full bg-[#0d0d0d]"
+        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-40 pointer-events-none" />
 
-        {/* Category badge */}
-        <span className={`absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold rounded-full ${
-          project.category === "data"
-            ? "bg-purple-500/80 text-white"
-            : "bg-blue-500/80 text-white"
-        }`}>
-          {project.category === "data" ? "Data Analytics" : "Web Development"}
+      <span className={`absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold rounded-full z-10 ${
+        project.category === "data" ? "bg-purple-500/80 text-white" : "bg-blue-500/80 text-white"
+      }`}>
+        {project.category === "data" ? "Data Analytics" : "Web Development"}
+      </span>
+
+      {project.status === "in-progress" && (
+        <span className="absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-500/80 text-white z-10">
+          In Progress
         </span>
+      )}
+    </div>
 
-        {/* Status badge */}
-        {project.status === "in-progress" && (
-          <span className="absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold rounded-full bg-yellow-500/80 text-white">
-            In Progress
-          </span>
-        )}
-      </div>
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5">

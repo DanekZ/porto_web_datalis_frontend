@@ -60,11 +60,11 @@ const ProjectDetail = () => {
           <div className="lg:sticky lg:top-24">
 
             {/* Main image */}
-            <div className="relative rounded-xl overflow-hidden bg-[#1a1a1a] border border-[#2d2d2d] group">
+           <div className="relative rounded-xl overflow-hidden bg-[#0d0d0d] border border-[#2d2d2d] group">
               <img
                 src={allImages[activeImg]}
                 alt={`${project.title} ${activeImg + 1}`}
-                className="w-full h-72 object-cover transition-all duration-500"
+                className="w-full h-72 object-contain transition-all duration-500"
               />
 
               {/* Overlay gradient */}
@@ -113,25 +113,24 @@ const ProjectDetail = () => {
               )}
             </div>
 
-            {/* Thumbnail strip */}
+           {/* Thumbnail strip */}
             {allImages.length > 1 && (
               <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
                 {allImages.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
-                    className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden bg-[#0d0d0d] border-2 transition-all duration-300 ${
                       i === activeImg
                         ? "border-blue-400 opacity-100"
                         : "border-transparent opacity-50 hover:opacity-80"
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>
             )}
-
             {/* Project Info card — di bawah gallery */}
             <div className="mt-4 bg-[#1a1a1a] border border-[#2d2d2d] rounded-xl p-5">
               <h3 className="text-sm font-semibold text-white mb-4">Project Info</h3>

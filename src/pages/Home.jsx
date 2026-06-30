@@ -7,6 +7,15 @@ import { ArrowRight, ExternalLink, Github, Mail } from "lucide-react";
 import { useApi } from "../hooks/useApi";
 import { getFeaturedProjects } from "../services/api";
 
+const preloadImage = (src) =>
+  new Promise((resolve) => {
+    if (!src) return resolve();
+    const img = new Image();
+    img.src = src;
+    img.onload = resolve;
+    img.onerror = resolve;
+  });
+
 const FloatingPhoto = ({ src, alt }) => {
   const containerRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -99,13 +108,16 @@ const FeaturedCard = ({ project }) => {
   const techStack = project.tech_stack ?? [];
   return (
     <div className="group flex flex-col h-full bg-[#1a1a1a] border border-[#2d2d2d] rounded-xl overflow-hidden hover:border-[#404040] transition-all duration-300 hover:-translate-y-1">
-      <div className="relative h-48 overflow-hidden">
-        <img src={project.thumbnail} alt={project.title} className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-60" />
-        <span className={`absolute top-3 left-3 px-2 py-1 text-xs font-semibold rounded-full ${project.category === "data" ? "bg-purple-500/80 text-white" : "bg-blue-500/80 text-white"}`}>
-          {project.category === "data" ? "Data Analytics" : "Web Development"}
-        </span>
-      </div>
+        <div className="relative h-48 overflow-hidden bg-[#0d0d0d]">
+          <img src={project.thumbnail} alt={project.title}
+            className="object-contain w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] to-transparent opacity-60" />
+          <span className={`absolute top-3 left-3 px-2 py-1 text-xs font-semibold rounded-full ${
+            project.category === "data" ? "bg-purple-500/80 text-white" : "bg-blue-500/80 text-white"
+          }`}>
+            {project.category === "data" ? "Data Analytics" : "Web Development"}
+          </span>
+        </div>
       <div className="flex flex-col flex-1 p-5">
         <h3 className="mb-2 text-lg font-bold text-white transition-colors group-hover:text-blue-400">{project.title}</h3>
         <p className="text-[#a3a3a3] text-sm leading-relaxed mb-4 line-clamp-2 flex-1">{project.description}</p>
@@ -139,34 +151,38 @@ const FeaturedCard = ({ project }) => {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 function Home() {
-  const [isProjectsVisible, setProjectsVisible] = useState(false);
-  const [isCtaVisible, setCtaVisible] = useState(false);
-  const projectsRef = useRef(null);
-  const ctaRef = useRef(null);
+    const [isProjectsVisible, setProjectsVisible] = useState(false);
+    const [isCtaVisible,      setCtaVisible]      = useState(false);
+    const [imagesReady,       setImagesReady]     = useState(false);
+    const projectsRef = useRef(null);
+    const ctaRef      = useRef(null);
 
-  const { data, isLoading } = useApi(getFeaturedProjects);
-  const featuredProjects = data?.data ?? [];
+    const { data, isLoading } = useApi(getFeaturedProjects);
+    const featuredProjects = data?.data ?? [];
 
-  useEffect(() => {
-    const makeObserver = (setter) =>
-      new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setter(true);
-        },
-        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
-      );
+    // Preload gambar setelah data didapat
+    useEffect(() => {
+      if (!featuredProjects.length) { setImagesReady(false); return; }
+      setImagesReady(false);
+      Promise.all(featuredProjects.map((p) => preloadImage(p.thumbnail)))
+        .then(() => setImagesReady(true));
+    }, [featuredProjects]);
 
-    const obsProjects = makeObserver(setProjectsVisible);
-    const obsCta = makeObserver(setCtaVisible);
+    useEffect(() => {
+      const makeObserver = (setter) =>
+        new IntersectionObserver(
+          ([entry]) => { if (entry.isIntersecting) setter(true); },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
 
-    if (projectsRef.current) obsProjects.observe(projectsRef.current);
-    if (ctaRef.current) obsCta.observe(ctaRef.current);
+      const obsProjects = makeObserver(setProjectsVisible);
+      const obsCta      = makeObserver(setCtaVisible);
 
-    return () => {
-      obsProjects.disconnect();
-      obsCta.disconnect();
-    };
-  }, []);
+      if (projectsRef.current) obsProjects.observe(projectsRef.current);
+      if (ctaRef.current)      obsCta.observe(ctaRef.current);
+
+      return () => { obsProjects.disconnect(); obsCta.disconnect(); };
+    }, []);
 
   return (
     <div className="min-h-screen pt-16">
@@ -214,27 +230,41 @@ function Home() {
       {/* ── Featured Projects ─────────────────────────────────────────────── */}
       <section ref={projectsRef} className="section border-t border-[#2d2d2d]">
         <div className="container">
-          <div className={`text-center mb-12 transition-all duration-700 ${isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 ${
+            isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}>
             <h2 className="section-title">Featured Projects</h2>
             <div className="section-divider" />
-            <p className="text-[#737373] max-w-xl mx-auto text-sm">A selection of my recent work across web development and data analytics.</p>
+            <p className="text-[#737373] max-w-xl mx-auto text-sm">
+              A selection of my recent work across web development and data analytics.
+            </p>
           </div>
 
-          {isLoading ? (
+          {isLoading || !imagesReady ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-[#1a1a1a] border border-[#2d2d2d] rounded-xl h-72 animate-pulse" />
               ))}
             </div>
           ) : (
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 delay-200 ${isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              {featuredProjects.map((project) => (
-                <FeaturedCard key={project.id} project={project} />
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 delay-200 ${
+              isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}>
+              {featuredProjects.map((project, index) => (
+                <div
+                  key={project.id}
+                  className="animate-fade-in-left"
+                  style={{ animationDelay: `${index * 0.06}s`, animationFillMode: "both" }}
+                >
+                  <FeaturedCard project={project} />
+                </div>
               ))}
             </div>
           )}
 
-          <div className={`mt-10 text-center transition-all duration-700 delay-300 ${isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`mt-10 text-center transition-all duration-700 delay-300 ${
+            isProjectsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}>
             <Link to="/projects" className="btn-secondary">
               View All Projects <ArrowRight size={16} />
             </Link>

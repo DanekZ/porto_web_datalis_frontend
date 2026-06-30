@@ -1,8 +1,28 @@
+import { useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard.jsx";
 import Loading from "../../common/Loading.jsx";
 
+const preloadImage = (src) =>
+  new Promise((resolve) => {
+    if (!src) return resolve();
+    const img = new Image();
+    img.src = src;
+    img.onload = resolve;
+    img.onerror = resolve; // tetap resolve supaya tidak macet kalau gambar gagal load
+  });
+
 const ProjectGrid = ({ projects, isLoading = false }) => {
-  if (isLoading) return <Loading />;
+  const [imagesReady, setImagesReady] = useState(false);
+
+  useEffect(() => {
+    if (!projects.length) { setImagesReady(true); return; }
+
+    setImagesReady(false);
+    Promise.all(projects.map((p) => preloadImage(p.thumbnail)))
+      .then(() => setImagesReady(true));
+  }, [projects]);
+
+  if (isLoading || !imagesReady) return <Loading />;
 
   if (projects.length === 0) {
     return (
@@ -24,8 +44,8 @@ const ProjectGrid = ({ projects, isLoading = false }) => {
       {projects.map((project, index) => (
         <div
           key={project.id}
-          className="animate-fade-in"
-          style={{ animationDelay: `${index * 0.08}s`, animationFillMode: "both" }}
+          className="animate-fade-in-left"
+          style={{ animationDelay: `${index * 0.06}s`, animationFillMode: "both" }}
         >
           <ProjectCard project={project} />
         </div>
