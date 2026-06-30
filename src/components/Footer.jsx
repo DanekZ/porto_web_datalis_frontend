@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getSettings } from "../services/api";
+import { useApi } from "../hooks/useApi";
+
 
 function Footer() {
+  const { data: settingsData, isLoading: settingsLoading, error: settingsError } = useApi(getSettings);
+
+
   const currentYear = new Date().getFullYear();
   const [localTime, setLocalTime] = useState("");
 
@@ -97,7 +103,9 @@ function Footer() {
           <div>
             <h4 className="mb-3 text-sm font-semibold tracking-widest text-white uppercase">Local Time</h4>
 
-            <p className="text-sm text-[#737373]">Bontang, Indonesia (WITA)</p>
+            <p className="text-sm text-[#737373]">
+               {settingsData?.data.site_location || "Bontang, Indonesia (WITA)"}
+            </p>
 
             <p className="mt-1 font-mono text-2xl font-bold text-white">{localTime}</p>
           </div>

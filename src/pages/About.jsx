@@ -265,13 +265,29 @@ const ServiceCard = ({ title, description, tags, svg: SvgComponent }) => (
 );
 
 // ── Timeline Item ─────────────────────────────────────────────────────────────
-const TimelineItem = ({ year, title, role, description, type }) => {
+const TimelineItem = ({ year, title, role, description, type, start_date, end_date }) => {
   const dotColor = { work: "bg-blue-500", education: "bg-purple-500", training: "bg-green-500" }[type] ?? "bg-blue-500";
+
+  const months = {
+    '01':'Jan','02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun',
+    '07':'Jul','08':'Aug','09':'Sep','10':'Oct','11':'Nov','12':'Dec'
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'Present';
+    const [y, m] = dateStr.split('-');
+    return `${months[m] ?? m} ${y}`;
+  };
+
+  const dateRange = start_date
+    ? `${formatDate(start_date)} — ${formatDate(end_date)}`
+    : year;
+
   return (
     <div className="relative flex items-start">
       <div className={`absolute left-2 w-4 h-4 ${dotColor} rounded-full border-4 border-[#171717] flex-shrink-0`} />
       <div className="ml-12">
-        <span className="text-xs font-semibold text-blue-400">{year}</span>
+        <span className="text-xs font-semibold text-blue-400">{dateRange}</span>
         <h4 className="text-base font-bold text-white">{title}</h4>
         <p className="text-sm font-medium text-[#a3a3a3] mb-1">{role}</p>
         <p className="text-sm text-[#737373] leading-relaxed">{description}</p>
@@ -349,6 +365,7 @@ const About = () => {
   const { data: expData, isLoading: expLoading, error: expError, refetch: refetchExp } = useApi(getExperiences);
   const { data: eduData, isLoading: eduLoading, error: eduError, refetch: refetchEdu } = useApi(getEducations);
   const { data: skillsData } = useApi(getSkills);
+
 
   const experiences = expData?.data ?? [];
   const educations = eduData?.data ?? [];

@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Mail, MapPin, Clock, Github, Linkedin, Instagram } from "lucide-react";
+import { getSettings } from "../services/api";
+import { useApi } from "../hooks/useApi";
 
 const Contact = () => {
+  const { data: settingsData, isLoading: settingsLoading, error: settingsError } = useApi(getSettings);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,7 +26,7 @@ const Contact = () => {
         hour12: false,
       });
 
-      const date = now.toLocaleDateString("id-ID", {
+      const date = now.toLocaleDateString("en-US", {
         timeZone: "Asia/Makassar",
         weekday: "long",
         month: "long",
@@ -51,7 +55,9 @@ const Contact = () => {
 
     const { name, email, subject, message } = formData;
 
-    const mailtoLink = `mailto:zidaneabbasmallaniung@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+    const mailUser = settingsData?.data?.site_email || ""
+
+    const mailtoLink = `mailto:${mailUser}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
       `Name: ${name}
 Email: ${email}
 
@@ -167,30 +173,67 @@ ${message}`,
                   <Mail size={18} className="text-blue-400" />
                 </div>
 
-                <div>
-                  <h3 className="mb-1 text-sm font-semibold text-white">Email</h3>
+               <div>
+                  {settingsLoading ? (
+                    <>
+                      <div className="w-12 h-4 mb-2 bg-[#2d2d2d] rounded animate-pulse"></div>
+                      <div className="w-48 h-4 bg-[#2d2d2d] rounded animate-pulse"></div>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="mb-1 text-sm font-semibold text-white">
+                        Email
+                      </h3>
 
-                  <a href="mailto:zidaneabbasmallaniung@gmail.com" className="text-sm text-[#737373] hover:text-blue-400 transition-colors">
-                    zidaneabbas99@gmail.com
-                  </a>
+                      <a
+                        href={`mailto:${settingsData?.data?.site_email || "zidaneabbas99@gmail.com"}`}
+                        className="text-sm text-[#737373] hover:text-blue-400 transition-colors"
+                      >
+                        {settingsData?.data?.site_email || "zidaneabbas99@gmail.com"}
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
 
-              {/* Location */}
+             {/* Location */}
 
-              <div className="bg-[#1a1a1a] border border-[#2d2d2d] rounded-xl p-5 flex items-start gap-4">
-                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 border rounded-lg bg-green-500/10 border-green-500/20">
-                  <MapPin size={18} className="text-green-400" />
-                </div>
+            <div className="bg-[#1a1a1a] border border-[#2d2d2d] rounded-xl p-5 flex items-start gap-4">
 
-                <div>
-                  <h3 className="mb-1 text-sm font-semibold text-white">Location</h3>
-
-                  <p className="text-sm text-[#737373]">Bontang, East Kalimantan</p>
-
-                  <p className="text-sm text-[#737373]">Indonesia</p>
-                </div>
+              <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 border rounded-lg bg-green-500/10 border-green-500/20">
+                <MapPin size={18} className="text-green-400" />
               </div>
+
+
+              <div>
+
+                {settingsLoading ? (
+                  <>
+                    <div className="w-16 h-4 mb-2 bg-[#2d2d2d] rounded animate-pulse"></div>
+
+                    <div className="w-40 h-4 mb-2 bg-[#2d2d2d] rounded animate-pulse"></div>
+
+                    <div className="w-20 h-4 bg-[#2d2d2d] rounded animate-pulse"></div>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="mb-1 text-sm font-semibold text-white">
+                      Location
+                    </h3>
+
+                    <p className="text-sm text-[#737373]">
+                      {settingsData?.location || "Bontang, East Kalimantan"}
+                    </p>
+
+                    <p className="text-sm text-[#737373]">
+                      {settingsData?.country || "Indonesia"}
+                    </p>
+                  </>
+                )}
+
+              </div>
+
+            </div>
 
               {/* Time */}
 

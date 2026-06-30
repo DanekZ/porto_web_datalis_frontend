@@ -35,3 +35,6 @@ export const getEducations = () => apiFetch('/educations');
 
 // Achievements
 export const getAchievements = () => apiFetch('/achievements');
+
+export const getSettings = () => apiFetch('/settings');
+

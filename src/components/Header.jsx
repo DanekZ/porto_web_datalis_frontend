@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getSettings } from "../services/api";
+import { useApi } from "../hooks/useApi";
+
 
 const Header = () => {
+  const { data: settingsData, isLoading: settingsLoading, error: settingsError } = useApi(getSettings);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -39,6 +44,7 @@ const Header = () => {
           <Link
             to="/"
             className="text-white font-bold text-lg tracking-tight hover:text-blue-400 transition-colors"
+            style={{ fontWeight: 700, fontSize: '24px' }}
           >
             Zidane<span className="text-blue-400">.</span>
           </Link>
@@ -60,10 +66,14 @@ const Header = () => {
           </nav>
 
 
-          {/* Desktop Download Resume */}
-          <div className="hidden md:flex items-center">
+         {/* Desktop Download Resume */}
+        <div className="hidden md:flex items-center">
+
+          {settingsLoading ? (
+            <div className="w-24 h-10 bg-[#2d2d2d] rounded-lg animate-pulse"></div>
+          ) : (
             <a
-              href="/resume.pdf"
+              href={settingsData.data?.resume_url || "/resume.pdf"}
               download
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white border border-[#404040] rounded-lg hover:border-blue-400 hover:text-blue-400 transition-all duration-300"
             >
@@ -83,7 +93,9 @@ const Header = () => {
 
               Resume
             </a>
-          </div>
+          )}
+
+        </div>
 
 
           {/* Mobile Toggle */}
@@ -125,29 +137,32 @@ const Header = () => {
         </div>
 
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="py-4 border-t md:hidden border-[#2d2d2d]">
+       {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="py-4 border-t md:hidden border-[#2d2d2d]">
 
-            <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
 
-              {navLinks.map(({ path, label }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  className={`nav-link ${
-                    isActive(path) ? 'active text-white' : ''
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {label}
-                </Link>
-              ))}
+            {navLinks.map(({ path, label }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`nav-link ${
+                  isActive(path) ? 'active text-white' : ''
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
 
 
-              {/* Mobile Resume */}
+            {/* Mobile Resume */}
+            {settingsLoading ? (
+              <div className="w-40 h-5 bg-[#2d2d2d] rounded animate-pulse"></div>
+            ) : (
               <a
-                href="/resume.pdf"
+                href={settingsData?.data?.resume_url || "/resume.pdf"}
                 download
                 className="flex items-center gap-2 text-sm font-medium text-blue-400"
               >
@@ -167,11 +182,11 @@ const Header = () => {
 
                 Download Resume
               </a>
+            )}
 
-
-            </div>
           </div>
-        )}
+        </div>
+      )}
 
       </div>
     </header>
