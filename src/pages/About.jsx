@@ -6,6 +6,26 @@ import Loading from "../components/common/Loading.jsx";
 import ErrorState from "../components/common/ErrorState.jsx";
 import * as si from "simple-icons";
 
+
+const TimelineLegend = () => {
+  const items = [
+    { label: "Work Experience", color: "bg-blue-500" },
+    { label: "Internship", color: "bg-purple-500" },
+    { label: "Training", color: "bg-green-500" },
+  ];
+
+  return (
+    <div className="flex flex-wrap gap-4 mb-6">
+      {items.map((item) => (
+        <div key={item.label} className="flex items-center gap-2 ms-8">
+          <span className={`w-3 h-3 rounded-full ${item.color}`} />
+          <span className="text-xs text-[#a3a3a3]">{item.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 // ── Simple Icons helper ───────────────────────────────────────────────────────
 const findIcon = (slug) => {
   if (!slug) return null;
@@ -266,7 +286,7 @@ const ServiceCard = ({ title, description, tags, svg: SvgComponent }) => (
 
 // ── Timeline Item ─────────────────────────────────────────────────────────────
 const TimelineItem = ({ year, title, role, description, type, start_date, end_date }) => {
-  const dotColor = { work: "bg-blue-500", education: "bg-purple-500", training: "bg-green-500" }[type] ?? "bg-blue-500";
+  const dotColor = { work: "bg-blue-500", internship: "bg-purple-500", training: "bg-green-500" }[type.toLowerCase()] ?? "bg-blue-500";
 
   const months = {
     '01':'Jan','02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun',
@@ -431,13 +451,16 @@ const About = () => {
               <div className="text-center lg:text-left">
                 <h3 className="mb-3 text-xl font-bold text-blue-400">Full-Stack Developer & Data Analytics</h3>
                 <p className="mb-4 leading-relaxed text-[#a3a3a3] text-sm">
-                  I'm <span className="font-semibold text-white">Zidane Abbas Mallaniung</span>, a graduate of <span className="font-semibold text-white">Diploma in Informatics Engineering</span> with a strong interest in{" "}
-                  <span className="font-semibold text-white">web development</span> and <span className="font-semibold text-white">data management</span>. Since college, I've been actively involved in developing various web-based projects,
-                  including a Point of Sales (POS) application that became the focus of my final project.
+                  I'm <span className="font-semibold text-white">Zidane Abbas Mallaniung</span>, a Diploma in Informatics Engineering graduate with a strong passion for{" "}
+                  <span className="font-semibold text-white">web development, data analytics, and technology-driven solutions</span>. 
+                  I have experience building web-based applications using modern technologies, including developing a Point of Sales (POS) application as my final project, 
+                  and creating solutions that improve efficiency through automation and data processing.
                 </p>
+
                 <p className="leading-relaxed text-[#a3a3a3] text-sm">
-                  I also worked as a <span className="font-semibold text-white">Data Entry & Data Manager</span> Intern at PT Tambang Raya Usaha Tama and as <span className="font-semibold text-white">Administrative Staff</span> at Surya
-                  Raya Badminton. These experiences strengthened my skills in data handling, administrative accuracy, and professional communication.
+                  I gained professional experience as a <span className="font-semibold text-white">Data Entry & Data Management Intern at PT Tambang Raya Usaha Tama</span>, 
+                  where I worked with operational data and developed automation workflows using Python and Pandas to streamline data processing. 
+                  I also have experience in administrative roles, which strengthened my skills in accuracy, problem-solving, and effective communication.
                 </p>
               </div>
             </div>
@@ -445,6 +468,7 @@ const About = () => {
             {/* Timeline */}
             <div className="relative">
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-[#2d2d2d]" />
+              <TimelineLegend/>
               {expLoading ? (
                 <Loading className="grid grid-cols-1 gap-4" />
               ) : expError ? (

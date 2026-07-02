@@ -10,7 +10,7 @@ const inputClass = "w-full px-3 py-2 bg-[#1a1a1a] border border-[#2d2d2d] rounde
 const labelClass = "block text-xs font-medium text-[#a3a3a3] mb-1.5";
 const emptyForm  = {
   year: '', title: '', role: '', description: '',
-  type: 'work', start_date: '', end_date: '', sort_order: 0
+  type: '', start_date: '', end_date: '', sort_order: 0
 };
 
 const months = [
@@ -24,7 +24,7 @@ const months = [
 
 const typeColor = {
   work:      'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  education: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  internship: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
   training:  'bg-green-500/10 text-green-400 border-green-500/20',
 };
 
@@ -113,7 +113,7 @@ const ExperienceList = () => {
       title:       exp.title       ?? '',
       role:        exp.role        ?? '',
       description: exp.description ?? '',
-      type:        exp.type        ?? 'work',
+      type:        exp.type        ?? '',
       start_date:  exp.start_date  ?? '',
       end_date:    exp.end_date    ?? '',
       sort_order:  exp.sort_order  ?? 0,
@@ -164,12 +164,8 @@ const ExperienceList = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Type *</label>
-              <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
-                className={inputClass}>
-                <option value="work">Work</option>
-                <option value="education">Education</option>
-                <option value="training">Training</option>
-              </select>
+              <input value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
+              placeholder="Work" className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Year (display) *</label>
@@ -236,7 +232,7 @@ const ExperienceList = () => {
             className="bg-[#141414] border border-[#1f1f1f] rounded-xl p-5 flex gap-4 hover:border-[#2d2d2d] transition-colors">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className={`px-2 py-0.5 text-xs rounded-full border ${typeColor[exp.type]}`}>
+                <span className={`px-2 py-0.5 text-xs rounded-full border ${typeColor[exp.type.toLowerCase()]}`}>
                   {exp.type}
                 </span>
                 {/* Tampilkan bulan-tahun kalau ada, fallback ke year */}

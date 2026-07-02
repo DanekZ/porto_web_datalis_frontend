@@ -77,7 +77,7 @@ const EducationList = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>Degree *</label>
+              <label className={labelClass}>Degree</label>
               <input value={form.degree} onChange={(e) => setForm({ ...form, degree: e.target.value })} placeholder="Diploma (D3)" className={inputClass} />
             </div>
             <div>
@@ -145,7 +145,7 @@ const EducationList = () => {
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-white">{edu.institution}</h3>
                 <p className="text-xs text-blue-400">
-                  {edu.degree} — {edu.field}
+                   {edu.degree ? edu.degree + "-" : ""} {edu.field}
                 </p>
                 <div className="flex gap-3 mt-1 text-xs text-[#525252]">
                   <span>
