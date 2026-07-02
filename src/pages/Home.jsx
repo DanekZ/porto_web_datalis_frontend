@@ -186,30 +186,44 @@ function Home() {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+     {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <GridBackground>
         <section className="flex justify-center items-center min-h-[90vh] px-4 sm:px-6 lg:px-8">
           <div className="container flex flex-col-reverse items-center justify-between gap-8 md:flex-row md:gap-16">
+
             {/* Text */}
             <div className="flex-1 max-w-2xl">
-              <p className="mb-2 text-sm font-semibold sm:text-base lg:text-lg text-gradient">
+
+              {/* Hello */}
+              <p className="mb-2 text-sm font-semibold sm:text-base lg:text-lg text-gradient animate-fade-in"
+                style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                 <TypeAnimation sequence={["Hello, My name is"]} speed={50} repeat={0} cursor={false} />
               </p>
-              <h1 className="mb-2 text-2xl font-bold leading-tight text-white md:text-3xl lg:text-5xl xl:text-6xl">
+
+              {/* Name */}
+              <h1 className="mb-2 text-2xl font-bold leading-tight text-white md:text-3xl lg:text-5xl xl:text-6xl animate-fade-in"
+                style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                 <TypeAnimation sequence={[1000, "Zidane Abbas M"]} speed={50} repeat={0} cursor={false} />
               </h1>
-              <h2 className="mb-4 text-lg font-semibold text-[#a3a3a3] sm:text-xl md:text-2xl lg:text-3xl">
+
+              {/* Role */}
+              <h2 className="mb-4 text-lg font-semibold text-[#a3a3a3] sm:text-xl md:text-2xl lg:text-3xl animate-fade-in"
+                style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
                 <TypeAnimation sequence={[2500, "Web Developer", 2500, "Data Analytics"]} speed={50} repeat={Infinity} />
               </h2>
-              <p className="text-sm leading-relaxed text-[#737373] sm:text-base lg:text-lg">
+
+              {/* Description */}
+              <p className="text-sm leading-relaxed text-[#737373] sm:text-base lg:text-lg animate-fade-in"
+                style={{ animationDelay: '0.7s', animationFillMode: 'both' }}>
                 <TypeAnimation
                   sequence={[3000, "I build exceptional digital experiences and extract meaningful insights from data. Specializing in elegant web solutions and powerful analytics tools."]}
-                  speed={80}
-                  repeat={0}
-                  cursor={false}
+                  speed={80} repeat={0} cursor={false}
                 />
               </p>
-              <div className="flex flex-wrap gap-4 mt-8">
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-4 mt-8 animate-fade-in"
+                style={{ animationDelay: '0.9s', animationFillMode: 'both' }}>
                 <Link to="/projects" className="btn-primary">
                   View Projects <ArrowRight size={16} />
                 </Link>
@@ -220,7 +234,8 @@ function Home() {
             </div>
 
             {/* Floating Photo */}
-            <div className="flex items-start justify-center flex-1 pt-0">
+            <div className="flex items-start justify-center flex-1 pt-0 animate-fade-in"
+              style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
               <FloatingPhoto src={MyFoto} alt="Zidane Abbas Mallaniung" />
             </div>
           </div>
